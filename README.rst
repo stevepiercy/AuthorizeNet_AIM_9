@@ -3,7 +3,7 @@ AuthorizeNet_AIM_9 - Payment processing tag for Lasso Professional 9 and the Aut
 
 Read the article `AuthorizeNet_AIM_9 - Payment processing tag for Lasso
 Professional 9 and the Authorize.Net AIM v3.1 payment processing gateway
-<http://www.stevepiercy.com/lasso-authorizenet-aim-9.html>`_.
+<http://www.stevepiercy.com/articles/authorizenet_aim_9-payment-processing-tag-for-lasso-professional-9-and-the-authorizenet-aim-v31-payment-processing-gateway/>`_.
 
 Description
 ===========
