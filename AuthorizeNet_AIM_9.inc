@@ -52,9 +52,9 @@ define authorizenet_aim_9(AIMParams::map, -testdeveloper::boolean=false, -testre
     //	#AIMParams->insert('x_delim_data'='TRUE')
     #AIMParams->insert('x_relay_response' = 'FALSE')
     // Do not change
-    iterate(#AIMParams, local(CurrentAIMParam))
-        #AIMParamArray->insert(#CurrentAIMParam->first = #CurrentAIMParam->second)
-    /iterate
+    #AIMParams->forEachPair => {
+        #AIMParamArray->insert(#1->first = #1->second)
+    }
     // The first 68 result labels are reserved by the AIM gateway for version 3.1.  Do not alter their order or names.
     local(aimresultlabels = array(
         'x_response_code',
