@@ -33,7 +33,7 @@ define authorizenet_aim_9(AIMParams::map, -testdeveloper::boolean=false, -testre
     if(#testdeveloper == true)
         #AIMURL = 'https://test.authorize.Net/gateway/transact.dll'
     else
-        #AIMURL = 'https://secure.authorize.Net/gateway/transact.dll'
+        #AIMURL = 'https://secure2.authorize.net/gateway/transact.dll'
     /if
     if(local_defined('testrequest'))
         if(#testrequest == 'true')
