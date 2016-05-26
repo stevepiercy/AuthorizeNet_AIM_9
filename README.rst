@@ -116,10 +116,10 @@ send to the method.
 
 .. code-block:: lasso
 
-    var('AIMParams') = map(
-        'x_first_name'	= $first_name,
-        'x_last_name'	= $last_name,
-        'x_amount'		= $amount,
+    local(AIMParams) = map(
+        'x_first_name'  = $first_name,
+        'x_last_name'   = $last_name,
+        'x_amount'      = $amount,
     ... and so on...)
 
 2. Set a variable to the method
@@ -131,7 +131,7 @@ based on the results (Response Code, etc.) from Authorize.Net.
 
 .. code-block:: lasso
 
-    var('aim_results') = AuthorizeNet_AIM_9($AIMParams)
+    local(aim_results) = AuthorizeNet_AIM_9(#AIMParams)
 
 Optionally, use the following following parameters.
 
@@ -147,10 +147,10 @@ parameters to Authorize.Net's test server as a test transaction request.
 
 .. code-block:: lasso
 
-	var('aim_results') = AuthorizeNet_AIM_9(
-	    $AIMParams,
-	    -testdeveloper=TRUE,
-	    -testrequest=TRUE)
+    local(aim_results) = AuthorizeNet_AIM_9(
+        #AIMParams,
+        -testdeveloper=TRUE,
+        -testrequest=TRUE)
 
 3. Sample page logic
 --------------------
@@ -158,11 +158,11 @@ parameters to Authorize.Net's test server as a test transaction request.
 .. code-block:: lasso
 
     // evaluate results and make appropriate decisions
-    if($aim_results->find('x_response_code') == '1')
+    if(#aim_results -> find('x_response_code') == '1') => {
         // transaction approved
     else
         // transaction failed
-        select($aim_results->find('x_response_code'))
+        match(#aim_results->find('x_response_code')) => {
             case('2')
                 //  declined
             case('3')
@@ -171,8 +171,8 @@ parameters to Authorize.Net's test server as a test transaction request.
                 //  held for review
             case
                 //  undefined error
-        /select
-    /if
+        }
+    }
 
 4. Sample message
 -----------------
@@ -187,9 +187,9 @@ declined.
 
 .. code-block:: lasso
 
-    $sample_msg->append('Thank you, ' + $aim_results->find('x_first_name')
+    $sample_msg->append('Thank you, ' + #aim_results->find('x_first_name')
         + '!  You have personally enriched me by $'
-        + $aim_results->find('x_amount') + '.')
+        + #aim_results->find('x_amount') + '.')
 
 5. Custom labels
 ----------------
@@ -206,7 +206,7 @@ Authorize.Net test server.
 .. code-block:: lasso
 
     [
-    var('AIMParams') = map(
+    local(AIMParams) = map(
         'x_login'='ENTER_YOUR_LOGIN',
         'x_tran_key'='ENTER_YOUR_TRANSACTION_KEY',
         'x_type'='auth_only',
@@ -214,8 +214,8 @@ Authorize.Net test server.
         'x_exp_date'='1220',                // December 2020
         'x_amount'='0.01')
 
-    var('results') = AuthorizeNet_AIM_9($AIMParams, -testdeveloper=true)
-    $results
+    local(results) = AuthorizeNet_AIM_9(#AIMParams, -testdeveloper=true)
+    #results
     ]
 
 See the comments embedded in the method's code for proper configuration.
@@ -250,13 +250,13 @@ In addition to this method, the following are requirements.
 #. SSL.
 #. `Secure certificate <http://www.namecheap.com/?aff=26253>`_ (starting at
    $10/year from NameCheap.com)
-#. `Merchant account <http://www.takecardstoday.com/index.php?partner=100434>`_
+#. `Merchant account <http://www.takecardstoday.com/#oid=1457_2>`_
    that accepts payments over the Internet.  Some brick and mortar retailers
    already have a merchant account, so sometimes it is easier to add this
    feature to their existing merchant account. If you need a merchant account,
    you can support the continued development of the ``AuthorizeNet_AIM_9``
    method using my `referral link
-   <http://www.takecardstoday.com/index.php?partner=100434>`_.
+   <http://www.takecardstoday.com/#oid=1457_2>`_.
    As of May 28, 2014, the merchant account costs $8.95/month (for a statement
    fee), plus 2.14% of the transaction amount and 24¢ per transaction.
    Everything else is free.
@@ -270,17 +270,3 @@ In addition to this method, the following are requirements.
 
 I am available as a consultant for ecommerce solutions. Please visit `Services
 </services/>`_ for more information.
-
-Notes and Acknowledgments
-=========================
-
-BETA RELEASE
-------------
-
-This version has not been tested against an actual Authorize.Net gateway
-account. It has been tested against a developer test account only. Please let
-me know if you perform any tests against an actual Authorize.Net gateway
-account and the results of your tests.
-
-Modified to work with Lasso 9. Thanks to Kyle Jessup for the ``void`` tip and
-LassoSoft for the Enigma Machine code converter.
