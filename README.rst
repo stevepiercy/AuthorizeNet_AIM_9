@@ -246,8 +246,8 @@ create a "webmaster" user that has the required access.
 
 In addition to this method, the following are requirements.
 
-#. Dedicated IP for SSL (~$10/month).
-#. SSL.
+#. Dedicated IP for TLS (~$10/month).
+#. TLS.
 #. `Secure certificate <http://www.namecheap.com/?aff=26253>`_ (starting at
    $10/year from NameCheap.com)
 #. `Merchant account <http://www.takecardstoday.com/#oid=1457_2>`_
