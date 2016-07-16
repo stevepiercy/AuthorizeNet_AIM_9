@@ -6,6 +6,37 @@ define authorizenet_aim_9(
     if(local_defined('testrequest')) => {
         #testrequest -> isnota(::boolean) ? return 'testrequest is not boolean'
     }
+/*
+
+==================
+CONFIGURATION
+==================
+
+Configuration includes configuring the Authorize.Net website Merchant Interface, setting values in this tag, and passing values into this tag as a map of key/values.
+
+In the Authorize.Net Merchant Interface, obtain your transaction key.
+
+    Account > Settings > API Login ID and Transaction Key
+
+You will enter your transaction key below.
+
+Next configure the response delimiter character.
+
+    Account > Settings > Direct Response
+
+Use a pipe and no encapsulation characters:
+
+Delimited Response: (X) Yes    ( ) No
+Default Field Separator     | (pipe)  or [ ]
+Field Encapsulation Character   [blank] or  [ ]
+
+If you do not use the above settings then you must change the corresponding values as defined elsewhere in this tag.
+
+Now enter configuration values for this tag below.
+
+You can choose to either set configuration values in this tag below or pass them in as values in the map of AIM parameters.  Any values passed into this tag will override their corresponding values entered below.
+
+*/
     // Your API login ID for the payment gateway account
     local(x_login) = 'ENTER_YOUR_LOGIN'
     // Your transaction key obtained from the Merchant Interface
@@ -29,9 +60,9 @@ define authorizenet_aim_9(
         AIMCurrentResultLabel = null,
         output = null,
         )
+
     /*
-    The following URL will be used to send your POST parameters to Authorize.Net.
-    'test' is used for testing your developer x_login and x_tran_key values, whereas 'secure' is used for testing your merchant account values.
+    The following URL will be used to send your POST parameters to Authorize.Net. 'test' is used for testing your developer x_login and x_tran_key values, whereas 'secure' is used for testing your merchant account values.
 
     Note that you can still submit test transactions to 'secure' either by setting the Authorize.Net merchant interface to TEST MODE or by submitting a transaction with the parameter 'x_test_request'='TRUE'.
     */
@@ -128,7 +159,7 @@ define authorizenet_aim_9(
         '',
         '',
         '',
-        // The following labels are optionally defined by the merchant and echoed by the AIM gateway.  If you do not add them here, they will not be echoed by the AIM Results Array and not added to #output.
+        // The following labels are optionally defined by the merchant and echoed by the AIM gateway.  If you do not add them here, they will not be echoed by the AIM Results Array and not added to the #output.
         'x_comments',
         'x_another_example')
 
@@ -157,6 +188,7 @@ define authorizenet_aim_9(
             if(#aimresultlabels -> size > #counter) => {
                 // We are within the range of defined results labels.
                 local(current_label) = #aimresultlabels -> get(#counter)
+                
                 if(#current_result != '') => {
                     #output -> insert(#current_label = #current_result)
                 }
